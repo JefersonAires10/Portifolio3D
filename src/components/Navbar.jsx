@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
+import { useLanguage } from "../hooks/LanguageContext.jsx";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { currentLanguage, toggleLanguage } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +28,10 @@ const Navbar = () => {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLanguageChange = (e) => {
+    toggleLanguage(e.target.value);
+  }
 
   return (
     <nav
@@ -53,19 +61,20 @@ const Navbar = () => {
               key={Link.id}
               className={`${active === Link.title ? "text-white" : "text-secondary"
                 } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
+              onClick={() => setActive(Link.title)}
             >
-              <a href={`#${Link.id}`}>{Link.title}</a>
+              <a href={`#${Link.id}`}>{t(Link.title)}</a>
             </li>
           ))}
           <select
-            onChange={(e) => setActive(e.target.value)}
+            value={currentLanguage}
             className='list-none hidden sm:flex flex-row gap-10 text-secondary hover:text-white text-[18px] font-medium cursor-pointer'
+            onChange={handleLanguageChange}
           >
             <option className={`${active === 'PT' ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`} value=''>PT</option>
+              } hover:text-white text-[18px] font-medium cursor-pointer`} value='pt'>PT</option>
             <option className={`${active === 'EN' ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`} value=''>EN</option>
+              } hover:text-white text-[18px] font-medium cursor-pointer`} value='en'>EN</option>
           </select>
         </ul>
 
@@ -82,27 +91,25 @@ const Navbar = () => {
               } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
           >
             <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
-              {navLinks.map((nav) => (
+              {navLinks.map((Link) => (
                 <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${active === nav.title ? "text-white" : "text-secondary"
-                    }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(nav.title);
-                  }}
+                  key={Link.id}
+                  className={`${active === Link.title ? "text-white" : "text-secondary"
+                    } hover:text-white text-[18px] font-medium cursor-pointer`}
+                  onClick={() => setActive(Link.title)}
                 >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
+                  <a href={`#${Link.id}`}>{t(Link.title)}</a>
                 </li>
               ))}
               <select
-                onChange={(e) => setActive(e.target.value)}
-                className='list-none sm:flex flex-row gap-10 text-secondary hover:text-white text-[18px] font-medium cursor-pointer'
+                value={currentLanguage}
+                className=' sm:flex flex-row gap-10 text-secondary hover:text-white text-[18px] font-medium cursor-pointer'
+                onChange={handleLanguageChange}
               >
                 <option className={`${active === 'PT' ? "text-white" : "text-secondary"
-                  } hover:text-white text-[18px] font-medium cursor-pointer`} value=''>PT</option>
+                  } hover:text-white text-[18px] font-medium cursor-pointer`} value='pt'>PT</option>
                 <option className={`${active === 'EN' ? "text-white" : "text-secondary"
-                  } hover:text-white text-[18px] font-medium cursor-pointer`} value=''>EN</option>
+                  } hover:text-white text-[18px] font-medium cursor-pointer`} value='en'>EN</option>
               </select>
             </ul>
           </div>
