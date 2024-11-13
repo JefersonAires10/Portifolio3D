@@ -13,7 +13,6 @@ import {
     front, 
     med,
     carrent,
-    jobit,
     tripguide,
     threejs,
     datascience,
@@ -175,27 +174,6 @@ import {
       ],
       image: carrent,
       source_code_link: "https://github.com/JefersonAires10/Portifolio3D",
-    },
-    {
-      name: "Vizion",
-      description:
-        "Centraliza informações cruciais sobre clientes, vendas, estoque e finanças, permitindo uma tomada de decisão estratégica com base em dados concretos.",
-      tags: [
-        {
-          name: "react",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "javascript",
-          color: "green-text-gradient",
-        },
-        {
-          name: "styled-components",
-          color: "pink-text-gradient",
-        },
-      ],
-      image: jobit,
-      source_code_link: "https://vizion.jit.technology/",
     },
     {
       name: "AVL",
